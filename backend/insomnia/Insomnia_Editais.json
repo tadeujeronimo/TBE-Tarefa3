@@ -1,0 +1,975 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-09-28T12:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v8.6.1",
+  "resources": [
+    {
+      "_id": "__WORKSPACE_1__",
+      "parentId": null,
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "name": "Sistema de Monitorias",
+      "description": "Workspace de testes da API do Sistema de Monitorias (Tarefa 3: autenticação JWT, papéis ALUNO/ADMIN e rotas protegidas). Cada requisição traz, na aba Docs, o status HTTP esperado. Ordem: pasta Autenticação (A01 → A04 e A10) e depois a pasta Editais. O admin é criado pelo 'npm run seed' (ADMIN_EMAIL/ADMIN_PASSWORD do .env).",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "__ENV_1__",
+      "parentId": "__WORKSPACE_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3333",
+        "id_valido": 1,
+        "id_inexistente": 9999,
+        "id_delete": 6,
+        "email_teste": "aluno@teste.com",
+        "senha_teste": "123456",
+        "email_admin": "admin@admin.com",
+        "senha_admin": "admin123",
+        "token_aluno": "{% response 'body', '__REQ_A04__', 'b64::JC50b2tlbg==::46b', 'never', 60 %}",
+        "token_admin": "{% response 'body', '__REQ_A10__', 'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "id_valido",
+          "id_inexistente",
+          "id_delete",
+          "email_teste",
+          "senha_teste",
+          "email_admin",
+          "senha_admin",
+          "token_aluno",
+          "token_admin"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1789000000000,
+      "_type": "environment"
+    },
+    {
+      "_id": "__FOLDER_1__",
+      "parentId": "__WORKSPACE_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "name": "Editais",
+      "description": "CRUD de editais. GET é público; POST/PUT/DELETE exigem token de ADMIN (aluno logado recebe 403).",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1789000000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "__REQ_1__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/",
+      "name": "01 · GET / (status da API) → 200",
+      "description": "Esperado: 200 OK. Confere se o servidor está no ar.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1788999999900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_2__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais",
+      "name": "02 · GET /api/editais (listar todos) → 200",
+      "description": "Esperado: 200 OK com um array de editais (o seed cria 6).",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1788999999800,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_3__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_valido }}",
+      "name": "03 · GET /api/editais/:id (ID válido) → 200",
+      "description": "Esperado: 200 OK com o edital. O id vem da variável id_valido do ambiente.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1788999999700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_4__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/abc",
+      "name": "04 · GET /api/editais/abc (ID inválido) → 400",
+      "description": "Esperado: 400 Bad Request - 'ID inválido. Use um inteiro positivo.' (vale também para 0, -5 e 1.5).",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1788999999600,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_5__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_inexistente }}",
+      "name": "05 · GET /api/editais/:id (ID inexistente) → 404",
+      "description": "Esperado: 404 Not Found - 'Edital com id 9999 não foi encontrado.'",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1788999999500,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_6__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais",
+      "name": "06 · POST /api/editais (payload válido) [ADMIN] → 201",
+      "description": "Requer token de ADMIN (Bearer). Esperado: 201 Created com o edital criado (inclui id, createdAt e updatedAt).",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"disciplina\": \"Compiladores\",\n  \"descricao\": \"Edital de monitoria da disciplina de Compiladores.\",\n  \"imageUrl\": \"/images/compiladores.png\",\n  \"professor\": \"Nome do Professor\",\n  \"curso\": \"Ciência da Computação\",\n  \"vagas\": 2,\n  \"dataAbertura\": \"2026-08-01\",\n  \"dataEncerramento\": \"2026-08-20\",\n  \"status\": \"ABERTO\",\n  \"destaque\": false\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}"
+      },
+      "metaSortKey": -1788999999400,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_7__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais",
+      "name": "07 · POST /api/editais (payload inválido) [ADMIN] → 400",
+      "description": "Requer token de ADMIN (Bearer). Esperado: 400 Bad Request - 'Payload inválido' com a lista 'issues' (disciplina < 3, descricao < 10, imageUrl vazio, vagas <= 0). Barrado pelo Zod.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"disciplina\": \"ab\",\n  \"descricao\": \"curta\",\n  \"imageUrl\": \"\",\n  \"professor\": \"Nome do Professor\",\n  \"curso\": \"Ciência da Computação\",\n  \"vagas\": -1,\n  \"dataAbertura\": \"2026-08-01\",\n  \"dataEncerramento\": \"2026-08-20\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}"
+      },
+      "metaSortKey": -1788999999300,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_8__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_valido }}",
+      "name": "08 · PUT /api/editais/:id (atualização parcial válida) [ADMIN] → 200",
+      "description": "Requer token de ADMIN (Bearer). Esperado: 200 OK com o edital atualizado. Atualização PARCIAL: só os campos enviados mudam.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"vagas\": 3,\n  \"destaque\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}"
+      },
+      "metaSortKey": -1788999999200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_9__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_valido }}",
+      "name": "09 · PUT /api/editais/:id (inválido: vagas negativas) [ADMIN] → 400",
+      "description": "Requer token de ADMIN (Bearer). Esperado: 400 Bad Request - 'Vagas deve ser maior que zero'. (equivale ao 'price negativo' do enunciado)",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"vagas\": -5\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}"
+      },
+      "metaSortKey": -1788999999100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_10__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_inexistente }}",
+      "name": "10 · PUT /api/editais/:id (ID inexistente) [ADMIN] → 404",
+      "description": "Requer token de ADMIN (Bearer). Esperado: 404 Not Found - 'Edital não encontrado.' (erro P2025 do Prisma tratado).",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"vagas\": 3\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}"
+      },
+      "metaSortKey": -1788999999000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_11__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_delete }}",
+      "name": "11 · DELETE /api/editais/:id (ID válido) [ADMIN] → 204",
+      "description": "Requer token de ADMIN (Bearer). Esperado: 204 No Content (sem corpo). Remove o edital da variável id_delete. Para restaurar, rode 'npm run seed'.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}"
+      },
+      "metaSortKey": -1788999998900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_12__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_inexistente }}",
+      "name": "12 · DELETE /api/editais/:id (ID inexistente) [ADMIN] → 404",
+      "description": "Requer token de ADMIN (Bearer). Esperado: 404 Not Found - 'Edital não encontrado.' (P2025). Também retorna 404 ao repetir o DELETE do mesmo id.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}"
+      },
+      "metaSortKey": -1788999998800,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_13__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais",
+      "name": "13 · GET /api/editais (banco parado) → 500",
+      "description": "Esperado: 500 Internal Server Error - 'Erro ao listar editais.' Para provocar: rode 'docker compose stop' e execute esta requisição. Depois 'docker compose start'.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1788999998700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__FOLDER_AUTH__",
+      "parentId": "__WORKSPACE_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "name": "Autenticação",
+      "description": "Registro, login e /auth/me (válidos e inválidos). Rode A01, A04 e A10 antes das rotas protegidas.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1789000001000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "__REQ_A01__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/register",
+      "name": "A01 · POST /api/auth/register (válido) → 201",
+      "description": "Esperado: 201 Created com { user, token }. Na primeira execução cria o usuário; se repetir com o mesmo e-mail, retorna 409 (veja A03).",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Aluno Teste\",\n  \"email\": \"{{ _.email_teste }}\",\n  \"password\": \"{{ _.senha_teste }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999999900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A02__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/register",
+      "name": "A02 · POST /api/auth/register (inválido: e-mail e senha curta) → 400",
+      "description": "Esperado: 400 com a lista 'issues' do Zod (nome curto, e-mail inválido, senha com menos de 6 caracteres).",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"A\",\n  \"email\": \"isso-nao-e-email\",\n  \"password\": \"123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999999800,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A03__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/register",
+      "name": "A03 · POST /api/auth/register (e-mail já cadastrado) → 409",
+      "description": "Esperado: 409 Conflict. Rode depois do A01.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Outro Aluno\",\n  \"email\": \"{{ _.email_teste }}\",\n  \"password\": \"{{ _.senha_teste }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999999700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A04__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/login",
+      "name": "A04 · POST /api/auth/login (aluno, válido) → 200",
+      "description": "Esperado: 200 com { user (role ALUNO), token }. O token é capturado pela variável 'token_aluno' do ambiente (response chaining). Rode antes das requisições [AUTH]/[ALUNO].",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"{{ _.email_teste }}\",\n  \"password\": \"{{ _.senha_teste }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999999600,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A05__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/login",
+      "name": "A05 · POST /api/auth/login (senha errada) → 401",
+      "description": "Esperado: 401 'E-mail ou senha inválidos.' (mesma mensagem para e-mail inexistente).",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"{{ _.email_teste }}\",\n  \"password\": \"senha-errada\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999999500,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A06__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/login",
+      "name": "A06 · POST /api/auth/login (payload inválido) → 400",
+      "description": "Esperado: 400 com 'issues' do Zod (e-mail inválido e senha ausente).",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"nao-e-email\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999999400,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A07__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/me",
+      "name": "A07 · GET /api/auth/me (sem token) → 401",
+      "description": "Esperado: 401 'Token não informado.'",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1788999999300,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A08__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/me",
+      "name": "A08 · GET /api/auth/me (token inválido) → 401",
+      "description": "Esperado: 401 'Token inválido ou expirado.'",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "token.invalido.123"
+      },
+      "metaSortKey": -1788999999200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A09__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/me",
+      "name": "A09 · GET /api/auth/me (com token) [AUTH] → 200",
+      "description": "Esperado: 200 com { id, name, email, role, createdAt } do dono do token (nunca o hash da senha).",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_aluno }}"
+      },
+      "metaSortKey": -1788999999100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_14__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais",
+      "name": "14 · POST /api/editais (sem token) → 401",
+      "description": "Esperado: 401 'Token não informado.' O edital NÃO é criado.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"disciplina\": \"Compiladores\",\n  \"descricao\": \"Edital de monitoria da disciplina de Compiladores.\",\n  \"imageUrl\": \"/images/compiladores.png\",\n  \"professor\": \"Nome do Professor\",\n  \"curso\": \"Ciência da Computação\",\n  \"vagas\": 2,\n  \"dataAbertura\": \"2026-08-01\",\n  \"dataEncerramento\": \"2026-08-20\",\n  \"status\": \"ABERTO\",\n  \"destaque\": false\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999998600,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_15__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_valido }}",
+      "name": "15 · PUT /api/editais/:id (sem token) → 401",
+      "description": "Esperado: 401 'Token não informado.' O edital NÃO é alterado.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"vagas\": 3\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999998500,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_16__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_delete }}",
+      "name": "16 · DELETE /api/editais/:id (sem token) → 401",
+      "description": "Esperado: 401 'Token não informado.' O edital NÃO é removido.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1788999998400,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_17__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais",
+      "name": "17 · POST /api/editais (token inválido) → 401",
+      "description": "Esperado: 401 'Token inválido ou expirado.'",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"disciplina\": \"Compiladores\",\n  \"descricao\": \"Edital de monitoria da disciplina de Compiladores.\",\n  \"imageUrl\": \"/images/compiladores.png\",\n  \"professor\": \"Nome do Professor\",\n  \"curso\": \"Ciência da Computação\",\n  \"vagas\": 2,\n  \"dataAbertura\": \"2026-08-01\",\n  \"dataEncerramento\": \"2026-08-20\",\n  \"status\": \"ABERTO\",\n  \"destaque\": false\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "token.invalido.123"
+      },
+      "metaSortKey": -1788999998300,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A10__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/login",
+      "name": "A10 · POST /api/auth/login (admin, válido) → 200",
+      "description": "Esperado: 200 com { user (role ADMIN), token }. O admin precisa existir: rode 'npm run seed' no backend (usa ADMIN_EMAIL/ADMIN_PASSWORD do .env; os valores de email_admin/senha_admin do ambiente devem ser iguais). O token vira 'token_admin' e é usado nas requisições [ADMIN].",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"{{ _.email_admin }}\",\n  \"password\": \"{{ _.senha_admin }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999999000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_A11__",
+      "parentId": "__FOLDER_AUTH__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/auth/register",
+      "name": "A11 · POST /api/auth/register (tentando enviar role ADMIN) → 201 com role ALUNO",
+      "description": "Esperado: 201, mas user.role = ALUNO: o papel NUNCA é lido do body, então ninguém vira admin pelo cadastro público. (Na 2ª execução retorna 409, e-mail já cadastrado.)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Tentativa de Admin\",\n  \"email\": \"escalada@teste.com\",\n  \"password\": \"123456\",\n  \"role\": \"ADMIN\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1788999998900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_18__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais",
+      "name": "18 · POST /api/editais (aluno logado) [ALUNO] → 403",
+      "description": "Esperado: 403 'Acesso negado: apenas administradores...'. Token válido de ALUNO autentica (não é 401), mas não autoriza. O edital NÃO é criado.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"disciplina\": \"Compiladores\",\n  \"descricao\": \"Edital de monitoria da disciplina de Compiladores.\",\n  \"imageUrl\": \"/images/compiladores.png\",\n  \"professor\": \"Nome do Professor\",\n  \"curso\": \"Ciência da Computação\",\n  \"vagas\": 2,\n  \"dataAbertura\": \"2026-08-01\",\n  \"dataEncerramento\": \"2026-08-20\",\n  \"status\": \"ABERTO\",\n  \"destaque\": false\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_aluno }}"
+      },
+      "metaSortKey": -1788999998200,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_19__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_valido }}",
+      "name": "19 · PUT /api/editais/:id (aluno logado) [ALUNO] → 403",
+      "description": "Esperado: 403. O edital NÃO é alterado.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"vagas\": 3\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_aluno }}"
+      },
+      "metaSortKey": -1788999998100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "__REQ_20__",
+      "parentId": "__FOLDER_1__",
+      "modified": 1789000000000,
+      "created": 1789000000000,
+      "url": "{{ _.base_url }}/api/editais/{{ _.id_delete }}",
+      "name": "20 · DELETE /api/editais/:id (aluno logado) [ALUNO] → 403",
+      "description": "Esperado: 403. O edital NÃO é removido.",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_aluno }}"
+      },
+      "metaSortKey": -1788999998000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    }
+  ]
+}
