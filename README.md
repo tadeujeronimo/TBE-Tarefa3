@@ -74,8 +74,7 @@ O papel nunca é escolhido no cadastro: toda conta pública nasce como `ALUNO`.
 
 ## Vídeo de demonstração (YouTube – não listado):
 
-<!-- [https://youtu.be/](https://youtu.be/) -->
-(link do vídeo – a adicionar)
+[https://youtu.be/vu_feZjkBWY](https://youtu.be/vu_feZjkBWY)
 
 ## Autor
 
